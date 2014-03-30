@@ -105,7 +105,11 @@ class PerformData extends Data
 
     public function increment()
     {
-        if (!isset($this->val) || !is_numeric($this->val)) die("The incremented value must be a number only.\n");
+        if (
+            !isset($this->val) ||
+            !is_numeric($this->val) ||
+            !is_numeric($this->file_content->{$this->var})
+        ) die("Both incrementing values must be a numbers only.\n");
         $this->file_content->{$this->var} += intval($this->val);
         file_put_contents($this->file_address, json_encode((array)$this->file_content));
         print "The variable \"{$this->var}\" has been successfully incremented to {$this->file_content->{$this->var}}.\n";
